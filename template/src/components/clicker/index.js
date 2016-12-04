@@ -16,25 +16,27 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ click }, dispatch);
 }
 
+/* decorate our component to make it redux state aware using react-redux */
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Clicker extends React.Component {
+  static defaultProps = {
+    clicker: 0,
+  }
+
   static propTypes = {
-    clicker: React.PropTypes.number.isRequired,
-    click: React.PropTypes.func.isRequired,
+    clicker: React.PropTypes.number.isRequired, // mapped by mapStateToProps
+    click: React.PropTypes.func.isRequired, // mapped by mapDispatchToProps
   }
 
   render() {
     return (
       <div className={styles.main}>
-        <span className={styles.clicker}>{ this.props.clicker } +</span>
-        <input className={styles.input} ref="incInput" type="text" defaultValue="1" />
-
-        <button onClick={ () => {
-          const inputValue = this.refs.incInput.value.trim();
-          this.props.click(parseInt(inputValue, 10));
-        }}
-        >
-          Modify the counter!
+        <div>Counter: { this.props.clicker }</div>
+        <button onClick={() => this.props.click(1)}>
+          +1
+        </button>
+        <button onClick={() => this.props.click(-1)}>
+          -1
         </button>
       </div>
     );

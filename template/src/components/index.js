@@ -3,7 +3,7 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 
-import Navbar from '../../components/navbar';
+import Header from './header';
 import styles from './style.scss';
 
 export default class App extends Component {
@@ -13,14 +13,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className={styles.main}>
+      <div>
         <Helmet
           link={[{
             rel: 'icon', href: '/favicon.png',
           }]}
         />
-        <Navbar />
-        { this.props.children }
+        <Header />
+
+        <div className={styles.main}>
+          { this.props.children }
+        </div>
       </div>
     );
   }
